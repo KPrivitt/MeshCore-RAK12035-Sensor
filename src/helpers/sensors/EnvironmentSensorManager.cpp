@@ -712,7 +712,7 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   }
   
   pinMode(ioPin, INPUT);
-  MESH_DEBUG_PRINTLN("GPS did not init with ioPin %i try the next", ioPin);
+  MESH_DEBUG_PRINTLN("GPS did not init with this IO Pin %i try the next", ioPin);
   return false;
 }
 #endif
