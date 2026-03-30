@@ -677,7 +677,6 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   digitalWrite(ioPin,LOW);
   delay(500);
   digitalWrite(ioPin,HIGH);
-  MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
   delay(500);
 
   //Try to init RAK12500 on I2C
