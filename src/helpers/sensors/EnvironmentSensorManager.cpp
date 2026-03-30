@@ -103,7 +103,7 @@ static Adafruit_VL53L0X VL53L0X;
 
 #if ENV_INCLUDE_RAK12035
 #define TELEM_RAK12035_ADDRESS 0x20      // RAK12035 Soil Moisture sensor I2C address
-#include "RAK12035_SoilMoisture.h"
+#include <RAK12035_SoilMoisture.h>
 static RAK12035_SoilMoisture RAK12035;
 #endif
 
@@ -290,7 +290,7 @@ bool EnvironmentSensorManager::begin() {
     INA260_initialized = true;
   } else {
     INA260_initialized = false;
-    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA219_ADDRESS);
+    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA260_ADDRESS);
   }
   #endif
 
