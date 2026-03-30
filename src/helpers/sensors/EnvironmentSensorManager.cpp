@@ -290,7 +290,7 @@ bool EnvironmentSensorManager::begin() {
     INA260_initialized = true;
   } else {
     INA260_initialized = false;
-    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA260_ADDRESS);
+    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA219_ADDRESS);
   }
   #endif
 
@@ -500,6 +500,9 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
     }
     #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     #if ENV_INCLUDE_RAK12035
 <<<<<<< HEAD
     if (RAK12035_initialized) {
@@ -534,6 +537,7 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
       }
     #endif
   }
+
   return true;
 }
 
@@ -681,11 +685,6 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   digitalWrite(ioPin,LOW);
   delay(500);
   digitalWrite(ioPin,HIGH);
-<<<<<<< HEAD
-  MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
-=======
-  //MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
->>>>>>> dd567b7a (RAK12035 Soil Moisture Sensor support)
   delay(500);
 
   //Try to init RAK12500 on I2C
