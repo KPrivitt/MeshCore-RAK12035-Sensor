@@ -501,7 +501,7 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
     #endif
 
     #if ENV_INCLUDE_RAK12035
-      if (RAK12035_initialized) {
+    if (RAK12035_initialized) {
 
         // RAK12035 Telemetry is Channel 2
         telemetry.addTemperature(2, RAK12035.get_sensor_temperature());
@@ -532,7 +532,6 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
   }
   return true;
 }
-
 
 int EnvironmentSensorManager::getNumSettings() const {
   int settings = 0;
@@ -678,7 +677,7 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   digitalWrite(ioPin,LOW);
   delay(500);
   digitalWrite(ioPin,HIGH);
-  //MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
+  MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
   delay(500);
 
   //Try to init RAK12500 on I2C
