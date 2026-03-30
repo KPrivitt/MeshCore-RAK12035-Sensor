@@ -103,7 +103,7 @@ static Adafruit_VL53L0X VL53L0X;
 
 #if ENV_INCLUDE_RAK12035
 #define TELEM_RAK12035_ADDRESS 0x20      // RAK12035 Soil Moisture sensor I2C address
-#include <RAK12035_SoilMoisture.h>
+#include "RAK12035_SoilMoisture.h"
 static RAK12035_SoilMoisture RAK12035;
 #endif
 
@@ -290,7 +290,7 @@ bool EnvironmentSensorManager::begin() {
     INA260_initialized = true;
   } else {
     INA260_initialized = false;
-    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA260_ADDRESS);
+    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA219_ADDRESS);
   }
   #endif
 
@@ -501,7 +501,11 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
     #endif
 
     #if ENV_INCLUDE_RAK12035
+<<<<<<< HEAD
     if (RAK12035_initialized) {
+=======
+      if (RAK12035_initialized) {
+>>>>>>> dd567b7a (RAK12035 Soil Moisture Sensor support)
 
         // RAK12035 Telemetry is Channel 2
         telemetry.addTemperature(2, RAK12035.get_sensor_temperature());
@@ -677,7 +681,11 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   digitalWrite(ioPin,LOW);
   delay(500);
   digitalWrite(ioPin,HIGH);
+<<<<<<< HEAD
   MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
+=======
+  //MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
+>>>>>>> dd567b7a (RAK12035 Soil Moisture Sensor support)
   delay(500);
 
   //Try to init RAK12500 on I2C
