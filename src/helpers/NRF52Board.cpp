@@ -324,6 +324,7 @@ bool NRF52Board::startOTAUpdate(const char *id, char reply[]) {
   Bluefruit.configPrphConn(92, BLE_GAP_EVENT_LENGTH_MIN, 16, 16);
 
   Bluefruit.begin(1, 0);
+// Set max power. Accepted values are: -40, -30, -20, -16, -12, -8, -4, 0, 4,(nRF52840 only) 8 
 // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
 // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm,
 //   +5dBm, +6dBm, +7dBm and +8dBm.
