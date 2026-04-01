@@ -325,7 +325,11 @@ bool NRF52Board::startOTAUpdate(const char *id, char reply[]) {
 
   Bluefruit.begin(1, 0);
   // Set max power. Accepted values are: -40, -30, -20, -16, -12, -8, -4, 0, 4
+  #if defined(NRF52832_XXAA)
   Bluefruit.setTxPower(4);
+  #elif defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
+  Bluefruit.setTxPower(8);
+  #endif
   // Set the BLE device name
   Bluefruit.setName(ota_name);
 
