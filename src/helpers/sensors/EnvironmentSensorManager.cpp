@@ -103,7 +103,7 @@ static Adafruit_VL53L0X VL53L0X;
 
 #if ENV_INCLUDE_RAK12035
 #define TELEM_RAK12035_ADDRESS 0x20      // RAK12035 Soil Moisture sensor I2C address
-#include "RAK12035_SoilMoisture.h"
+#include <RAK12035_SoilMoisture.h>
 static RAK12035_SoilMoisture RAK12035;
 #endif
 
@@ -500,15 +500,8 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
     }
     #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     #if ENV_INCLUDE_RAK12035
-<<<<<<< HEAD
-    if (RAK12035_initialized) {
-=======
       if (RAK12035_initialized) {
->>>>>>> dd567b7a (RAK12035 Soil Moisture Sensor support)
 
         // RAK12035 Telemetry is Channel 2
         telemetry.addTemperature(2, RAK12035.get_sensor_temperature());
@@ -537,7 +530,6 @@ bool EnvironmentSensorManager::querySensors(uint8_t requester_permissions, Cayen
       }
     #endif
   }
-
   return true;
 }
 
@@ -686,6 +678,7 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   digitalWrite(ioPin,LOW);
   delay(500);
   digitalWrite(ioPin,HIGH);
+  //MESH_DEBUG_PRINTLN("ioPin set as Output, then Low 500ms then High 500ms Pin: %i",ioPin);
   delay(500);
 
   //Try to init RAK12500 on I2C
@@ -720,7 +713,8 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   }
   
   pinMode(ioPin, INPUT);
-  MESH_DEBUG_PRINTLN("GPS did not init with this IO pin... try the next");
+  //MESH_DEBUG_PRINTLN("ioPin configured as Input");
+  MESH_DEBUG_PRINTLN("GPS did not init with ioPin %i try the next", ioPin);
   return false;
 }
 #endif
@@ -736,7 +730,7 @@ void EnvironmentSensorManager::start_gps() {
   _location->begin();
   _location->reset();
 
-#ifndef PIN_GPS_EN
+#ifndef PIN_GPS_RESET
   MESH_DEBUG_PRINTLN("Start GPS is N/A on this board. Actual GPS state unchanged");
 #endif
 }
@@ -760,9 +754,6 @@ void EnvironmentSensorManager::loop() {
   static long next_gps_update = 0;
 
   #if ENV_INCLUDE_GPS
-  if (gps_active) {
-    _location->loop();
-  }
   _location->loop();
   if (millis() > next_gps_update) {
 
