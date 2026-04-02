@@ -68,8 +68,9 @@ void RAK12035_SoilMoisture::setup(TwoWire &i2c)
 // It uses the passed in I2C Address (default 0x20)
 //
 // ***  This code does not supprt three sensors ***
-//      The RAK12023 has three connectors, but each of the sensors must
-//      all have a different I2C addresses.  (This code has a function to set the adress)
+//      The RAK12023 has three connectors, but each of the sensors attached must
+//      all have a different I2C addresses.
+//      This code has a function to set the I2C adress of a sensor
 //      and currently only supports one address 0x20 (the default).
 //      To support three sensors, EnvironmentSensorManager would need to be modified
 //      to support multiple instances of the RAK12035_SoilMoisture class,
@@ -101,9 +102,9 @@ bool RAK12035_SoilMoisture::begin(uint8_t addr)
 /*------------------------------------------------------------------------------------------
  * Set Calibration values -  This is done with custom a firmware version
  *
- *   USE the Build Flag: -D ENABLE_RAK12035_CALIBRATION = 1
- * 
- *  Or change the value to 1 in the RAK12035_SoilMoisture.h file
+ *      USE the Build Flag: -D ENABLE_RAK12035_CALIBRATION = 1
+ * OR
+ *      Change the value to 1 in the RAK12035_SoilMoisture.h file
  * 
  * Calibration Procedure:
  * 1) Flash the the Calibration version of the firmware.
@@ -134,10 +135,10 @@ bool RAK12035_SoilMoisture::begin(uint8_t addr)
 */ 
 
 #if ENABLE_RAK12035_CALIBRATION 
-    uint16_t _wet = 2000;         // A high value the should be our of the normal Wet range
+    uint16_t _wet = 2000;         // A high value the should be out of the normal Wet range
      set_humidity_full(_wet);
 
-   uint16_t _dry = 50;            // A low value the should be our of the normal Dry range
+   uint16_t _dry = 50;            // A low value the should be out of the normal Dry range
    set_humidity_zero(_dry);
 #endif
 
@@ -147,7 +148,6 @@ bool RAK12035_SoilMoisture::begin(uint8_t addr)
   *
   *--------------------------------------------------------------------------------
   */
-
        if (query_sensor()) {
              MESH_DEBUG_PRINTLN("begin() - Sensor responded with valid version");
              return true;
@@ -238,9 +238,10 @@ bool RAK12035_SoilMoisture::sensor_sleep()                          //Command 06
         return false;
     }
     MESH_DEBUG_PRINTLN("Function 6: sensor_sleep() SUCCESS: Sensor acknowledged sleep command");
-    // Optional: turn off sensor power AFTER successful sleep command
 
-// This has been commented out due to a pin name conflict the the Heltec v3
+// Optional: turn off sensor power AFTER successful sleep command
+
+// This has been commented out due to a pin name conflict with the Heltec v3
 // This will need to be resolved if this funstion is to be utilized in the future
 /*
     digitalWrite(WB_IO2, LOW);
@@ -415,7 +416,7 @@ bool RAK12035_SoilMoisture::getEvent(uint8_t *humidity, uint16_t *temp)
 bool RAK12035_SoilMoisture::sensor_on()
 {
     uint8_t data;
- // This has been commented out due to a pin name conflict the the Heltec v3
+ // This has been commented out due to a pin name conflict with the Heltec v3
  // This will need to be resolved if this funstion is to be utilized in the future
 
 /*
@@ -458,7 +459,7 @@ bool RAK12035_SoilMoisture::reset()
 //  Power is never removed so the Sensor reset was removed and is not needed, 
 //  But might be needed if power is ever switched off.  Here is tested code.
 
-// This has been commented out due to a pin name conflict the the Heltec v3
+// This has been commented out due to a pin name conflict with the Heltec v3
 // This will need to be resolved if this funstion is to be utilized in the future
 
 /*
