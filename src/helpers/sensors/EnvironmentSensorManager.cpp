@@ -290,7 +290,7 @@ bool EnvironmentSensorManager::begin() {
     INA260_initialized = true;
   } else {
     INA260_initialized = false;
-    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA219_ADDRESS);
+    MESH_DEBUG_PRINTLN("INA260 was not found at I2C address %02X", TELEM_INA260_ADDRESS);
   }
   #endif
 
@@ -719,8 +719,7 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   }
   
   pinMode(ioPin, INPUT);
-  //MESH_DEBUG_PRINTLN("ioPin configured as Input");
-  MESH_DEBUG_PRINTLN("GPS did not init with ioPin %i try the next", ioPin);
+  MESH_DEBUG_PRINTLN("GPS did not init with this IO pin... try the next");
   return false;
 }
 #endif
