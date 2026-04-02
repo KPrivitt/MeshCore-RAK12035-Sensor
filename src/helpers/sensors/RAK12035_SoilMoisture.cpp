@@ -141,11 +141,11 @@ bool RAK12035_SoilMoisture::begin(uint8_t addr)
    set_humidity_zero(_dry);
 #endif
 
- /*------------------------------------------------------------------------------------------
+ /*--------------------------------------------------------------------------------
   * 
   *   Check if a sensor is present and return true if found, false if not present
   *
-  *------------------------------------------------------------------------------------------
+  *--------------------------------------------------------------------------------
   */
 
        if (query_sensor()) {
@@ -158,12 +158,12 @@ bool RAK12035_SoilMoisture::begin(uint8_t addr)
     }
 }
 
-/*------------------------------------------------------------------------------------------*
+/*---------------------------------------------------------------------------------
  *
  * Below are all the routines to execute the various I2C commands supported
  * by the RAK12035 sensor
  * 
- *------------------------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------------------*/
 
 uint16_t RAK12035_SoilMoisture::get_sensor_capacitance()            //Command 01 - (r) 2 byte
 {
@@ -239,7 +239,12 @@ bool RAK12035_SoilMoisture::sensor_sleep()                          //Command 06
     }
     MESH_DEBUG_PRINTLN("Function 6: sensor_sleep() SUCCESS: Sensor acknowledged sleep command");
     // Optional: turn off sensor power AFTER successful sleep command
+
+// This has been commented out due to a pin name conflict the the Heltec v3
+// This will need to be resolved if this funstion is to be utilized in the future
+/*
     digitalWrite(WB_IO2, LOW);
+*/
     return true;
 }
 
@@ -375,6 +380,8 @@ uint16_t RAK12035_SoilMoisture::get_humidity_zero()                 //Command 0B
  *                                                                                          *
  * The function returns true if both readings were successfully obtained, or false if any   *
  * error occurred during I2C communication.                                                 *
+ *                                                                                          *
+ * This function is currently not used                                                      *
  *------------------------------------------------------------------------------------------*/
 bool RAK12035_SoilMoisture::getEvent(uint8_t *humidity, uint16_t *temp)
 {
@@ -408,8 +415,9 @@ bool RAK12035_SoilMoisture::getEvent(uint8_t *humidity, uint16_t *temp)
 bool RAK12035_SoilMoisture::sensor_on()
 {
     uint8_t data;
- // This has been commented out due to pin name conflict the the Heltec v3
+ // This has been commented out due to a pin name conflict the the Heltec v3
  // This will need to be resolved if this funstion is to be utilized in the future
+
 /*
     pinMode(WB_IO2, OUTPUT);
 	digitalWrite(WB_IO2, HIGH);     //Turn on Sensor Power
@@ -437,14 +445,22 @@ bool RAK12035_SoilMoisture::sensor_on()
 
 bool RAK12035_SoilMoisture::reset()
 {
-// Atmel 8495 Microcoltroller: Reset input. A low level on this pin for longer than
+// This function is for a future Sensor Power Management function.
+// When power is reapplied this will reset the sensor and wait for it to respond
+// with a valid version.
+//
+// The Atmel 8495 Microcoltroller: Reset input. A low level on this pin for longer than
 // the minimum pulse length will generate a reset, even if the clock is not
 // running and provided the reset pin has not been disabled. The minimum pulse length is 
 // given in Table 25-5 on page 240. 2000ns = .002mS
 // Shorter pulses are not guaranteed to generate a reset.
-
-//  The Sensor reset was remomved and is not needed, power is never removed.
+//
+//  Power is never removed so the Sensor reset was removed and is not needed, 
 //  But might be needed if power is ever switched off.  Here is tested code.
+
+// This has been commented out due to a pin name conflict the the Heltec v3
+// This will need to be resolved if this funstion is to be utilized in the future
+
 /*
     pinMode(WB_IO4, OUTPUT);        //Set IO4 Pin to Output (connected to *reset on sensor)
     MESH_DEBUG_PRINTLN("Assert *reset (Low) for 1 mS");
