@@ -103,7 +103,7 @@ static Adafruit_VL53L0X VL53L0X;
 
 #if ENV_INCLUDE_RAK12035
 #define TELEM_RAK12035_ADDRESS 0x20      // RAK12035 Soil Moisture sensor I2C address
-#include <RAK12035_SoilMoisture.h>
+#include "RAK12035_SoilMoisture.h"
 static RAK12035_SoilMoisture RAK12035;
 #endif
 
@@ -713,8 +713,7 @@ bool EnvironmentSensorManager::gpsIsAwake(uint8_t ioPin){
   }
   
   pinMode(ioPin, INPUT);
-  //MESH_DEBUG_PRINTLN("ioPin configured as Input");
-  MESH_DEBUG_PRINTLN("GPS did not init with ioPin %i try the next", ioPin);
+  MESH_DEBUG_PRINTLN("GPS did not init with this IO pin... try the next");
   return false;
 }
 #endif

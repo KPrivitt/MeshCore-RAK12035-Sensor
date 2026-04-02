@@ -18,17 +18,8 @@
  *----------------------------------------------------------------------*/
 
 #include "RAK12035_SoilMoisture.h"
-
+#include "MeshCore.h"
 #include <Wire.h>
-
-#if MESH_DEBUG && ARDUINO
-  #include <Arduino.h>
-  #define MESH_DEBUG_PRINT(F, ...) Serial.printf("DEBUG: " F, ##__VA_ARGS__)
-  #define MESH_DEBUG_PRINTLN(F, ...) Serial.printf("DEBUG: " F "\n", ##__VA_ARGS__)
-#else
-  #define MESH_DEBUG_PRINT(...) {}
-  #define MESH_DEBUG_PRINTLN(...) {}
-#endif
 
 /*----------------------------------------------------------------------*
  * Constructor.                                                         *
@@ -77,8 +68,13 @@ void RAK12035_SoilMoisture::setup(TwoWire &i2c)
 // It uses the passed in I2C Address (default 0x20)
 //
 // ***  This code does not supprt three sensors ***
-//      The RAK12023 has three connectors, but the plugged in sensors must
-//      all have different I2C addresses.  (This code has a function to set the adress) 
+//      The RAK12023 has three connectors, but each of the sensors must
+//      all have a different I2C addresses.  (This code has a function to set the adress)
+//      and currently only supports one address 0x20 (the default).
+//      To support three sensors, EnvironmentSensorManager would need to be modified
+//      to support multiple instances of the RAK12035_SoilMoisture class,
+//      each with a different address. (0x20, 0x21, 0x22) 
+//      The begin() function would need to be modified to loop through the three addresses
 //
 // DEBUG STATEMENTS: Can be enabled by uncommenting or adding:
 //      File:    varients/rak4631 platformio.ini
@@ -399,9 +395,22 @@ bool RAK12035_SoilMoisture::getEvent(uint8_t *humidity, uint16_t *temp)
     return true;
 }
 
+/*------------------------------------------------------------------------------------------*
+ * Sensor Power Management and Reset Routines
+ * 
+ * These routines manage the power and reset state of the sensor. The sensor_on() routine is 
+ * designed to power on the sensor and wait for it to become responsive, while the reset() 
+ * routine toggles the reset pin and waits for the sensor to respond with a valid version.
+ * 
+ * They are for a future sensor power management function.
+ *------------------------------------------------------------------------------------------*/
+
 bool RAK12035_SoilMoisture::sensor_on()
 {
     uint8_t data;
+ // This has been commented out due to pin name conflict the the Heltec v3
+ // This will need to be resolved if this funstion is to be utilized in the future
+/*
     pinMode(WB_IO2, OUTPUT);
 	digitalWrite(WB_IO2, HIGH);     //Turn on Sensor Power
 
@@ -411,7 +420,7 @@ bool RAK12035_SoilMoisture::sensor_on()
     digitalWrite(WB_IO4, HIGH);     //Deassert Reset
 
     delay(10);                     // Wait for the sensor code to complete initialization
-
+*/
 	uint8_t v = 0;
     time_t timeout = millis();
 	while ((!query_sensor()))                    //Wait for sensor to respond to I2C commands, 
